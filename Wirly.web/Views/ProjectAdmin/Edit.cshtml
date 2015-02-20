@@ -1,0 +1,86 @@
+﻿@model Wirly.web.Models.ProjectEditModel
+@using Wirly.web.Models
+
+@{
+    ViewBag.Title = "Edit Project";
+}
+<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/wirlyApp.js"></script>
+<h2>Edit Project</h2>
+<div class="container" ng-app="wirlyApp">
+@using (Html.BeginForm("Edit", "Project"))
+{
+    <div class="form-group">
+        <label>Name:</label>
+        @Html.TextBoxFor(p => p.Project.Name, new {@class="form-control", disabled="true"})
+    </div>
+    
+    <div class="form-group">
+        <label>Description:</label>
+        @Html.TextAreaFor(p => p.Project.Description, new { @class = "form-control", Name="Description"})
+    </div>
+    
+    <div class="form-group">
+        <label>Body:</label>
+        @Html.TextAreaFor(p => p.Project.Body, new { @class = "ckeditor", id = "projectBody", Name="Body" })
+    </div>
+    <input type="hidden" value="@Model.Project.Id" id="hdnProjectId" />
+    <div class="row" id="ProjectMembershipController" ng-controller="ProjectMembershipController">
+        <input type="hidden" value="@Model.Project.Id" id="hdnProjectId" ng-model="projectId" />
+            <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">Users Not in Project</div>
+                <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item add-user-to-project"
+                        ng-click="AddUserToProject(user)"
+                        ng-repeat="user in UsersNotInProject">
+                        {{user.Email}}<span class="glyphicon glyphicon-plus" aria-hidden="true" style="float:right"></span>
+                        <input type="hidden" name="usersNotInProject" value="{{user.Id}}" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">Users in Project</div>
+                <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item remove-user-from-project"
+                        ng-click="RemoveUserFromProject(user)" 
+                        ng-repeat="user in UsersInProject">
+                        {{user.Email}}<span class="glyphicon glyphicon-minus" aria-hidden="true" style="float:right"></span>
+                        <input type="hidden" name="usersInProject" value="{{user.Id}}" />
+                </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    @Html.ActionLink("Cancel", "Index")
+}
+ </div>   
+
+        <script>
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('projectBody');
+
+    $('.add-user-to-project').click(function () {
+        var projectId = $('#hdnProjectId').val();
+        var userId = $(this).attr('data-user-id');
+        alert(projectId);
+        alert(userId);
+    });
+
+    window.Project = { Id: 123 };
+    window.UsersInProject = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Members))
+    window.UsersNotInProject = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.NonMembers));
+        </script>
+

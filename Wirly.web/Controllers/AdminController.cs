@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Wirly.web.Controllers
 {
+    [Route("admin/users/{action=Index}")]
     public class AdminController : Controller
     {
         // GET: Admin

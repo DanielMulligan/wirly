@@ -11,5 +11,7 @@ namespace Wirly.web.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string StartPage { get; set; }
+
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

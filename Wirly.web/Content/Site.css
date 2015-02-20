@@ -16,3 +16,13 @@ textarea {
     max-width: 280px;
 }
 
+
+.add-user-to-project:hover{
+    background-color:lightgreen;
+    cursor:pointer;
+}
+
+.remove-user-from-project:hover{
+    background-color:red;
+    cursor:pointer;
+}

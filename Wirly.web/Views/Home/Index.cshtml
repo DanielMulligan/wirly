@@ -1,7 +1,31 @@
-﻿
+﻿@using Wirly.web.Models
+
+@model IEnumerable<Project>
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Home";
 }
 
-<h2>Secured Info</h2>
+<h2>Projects</h2>
 
+<div class="panel panel-primary">
+<ul>
+@if(Model == null || !Model.Any())
+{
+    <li>No Projects for you</li>
+}
+else
+{
+    foreach (Project project in Model)
+    {
+        <li>
+            @Html.ActionLink(project.Name, "Index", "Project", new { id = project.Id }, new { @class = "btn btn-xs" })
+        </li>
+    }
+}
+
+</ul>
+
+  
+
+</div>
