@@ -11,12 +11,13 @@ using Wirly.web.Infrastructure;
 using Wirly.web.Models;
 using Microsoft.AspNet.Identity.Owin;
 
+
 namespace Wirly.web.Controllers
 {
     [Authorize]
+    [Route("Account/{action}")]
     public class AccountController : Controller
     {
-   
         [AllowAnonymous]     
         public ActionResult Login(string returnUrl)
         {
@@ -42,12 +43,19 @@ namespace Wirly.web.Controllers
                     AuthManager.SignOut();
                     AuthManager.SignIn(new AuthenticationProperties { IsPersistent= false}, ident);
 
-                    return Redirect(user.StartPage ?? "/home/index/");
+                    return Redirect("/");
                 }
             }
             ViewBag.ReturlUrl = returlUrl;
             return View(details);
         }
+
+        public ActionResult Logout()
+        {
+            AuthManager.SignOut();
+            return new RedirectResult("/account/login");
+        }
+
 
         private AppUserManager UserManager
         {
@@ -63,5 +71,7 @@ namespace Wirly.web.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
+
+
     }
 }

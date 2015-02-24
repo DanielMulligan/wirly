@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Wirly.web.Controllers
 {
+
     [Route("{action=Index}")]
     public class HomeController : Controller
     {

@@ -26,3 +26,8 @@ textarea {
     background-color:red;
     cursor:pointer;
 }
+
+.logout {
+    float:right;
+    padding: 15px 15px;
+}
