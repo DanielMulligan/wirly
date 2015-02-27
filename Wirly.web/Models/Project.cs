@@ -16,6 +16,7 @@ namespace Wirly.web.Models
         [AllowHtml]
         public string Body { get; set; }
         public virtual ICollection<AppUser> Users { get; set; }
+        public virtual ICollection<File> Files { get; set; }
 
         public Project()
         {

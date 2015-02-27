@@ -1204,6 +1204,7 @@
     <Compile Include="Infrastructure\AppRoleManager.cs" />
     <Compile Include="Infrastructure\AppUserManager.cs" />
     <Compile Include="Infrastructure\IdentityHelper.cs" />
+    <Compile Include="Infrastructure\Utils.cs" />
     <Compile Include="Migrations\201501270307118_something changed.cs" />
     <Compile Include="Migrations\201501270307118_something changed.Designer.cs">
       <DependentUpon>201501270307118_something changed.cs</DependentUpon>
@@ -1228,10 +1229,19 @@
     <Compile Include="Migrations\201502180152555_Add Projects to AppUser.Designer.cs">
       <DependentUpon>201502180152555_Add Projects to AppUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502270039248_Add Files Model.cs" />
+    <Compile Include="Migrations\201502270039248_Add Files Model.Designer.cs">
+      <DependentUpon>201502270039248_Add Files Model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502270055162_Add Projects to Files.cs" />
+    <Compile Include="Migrations\201502270055162_Add Projects to Files.Designer.cs">
+      <DependentUpon>201502270055162_Add Projects to Files.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Infrastructure\WirlyDbContext.cs" />
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
@@ -1262,6 +1272,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="NewFolder1\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201501270307118_something changed.resx">
@@ -1281,6 +1293,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502180152555_Add Projects to AppUser.resx">
       <DependentUpon>201502180152555_Add Projects to AppUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502270039248_Add Files Model.resx">
+      <DependentUpon>201502270039248_Add Files Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502270055162_Add Projects to Files.resx">
+      <DependentUpon>201502270055162_Add Projects to Files.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

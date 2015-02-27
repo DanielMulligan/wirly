@@ -26,6 +26,6 @@ namespace Wirly.web.Infrastructure
         }
 
         public DbSet<Project> Projects { get; set; }
-
+        public DbSet<File> Files { get; set; }
     }
 }
