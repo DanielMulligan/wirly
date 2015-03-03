@@ -25,3 +25,17 @@ wirlyApp.controller('ProjectMembershipController', function ($scope, $window) {
         $scope.UsersNotInProject.push({ Id: user.Id, Name: user.Name, Email: user.Email });
     }
 });
+
+wirlyApp.controller('ProjectDocumentController', function ($scope, $window, $http) {
+
+    $scope.DeleteDoc = function (id) {
+        var data = JSON.stringify(
+            {
+                id: id
+            });
+
+        $http.post("project/deletedocument", data).success(function () { alert('deleted');});
+    }
+
+    $scope.ProjectFiles = $window.ProjectFiles;
+});

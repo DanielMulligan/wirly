@@ -31,3 +31,7 @@ textarea {
     float:right;
     padding: 15px 15px;
 }
+
+#search:hover {
+    cursor: pointer;
+}

@@ -1,25 +1,72 @@
-﻿@model Wirly.web.Models.Project
+﻿@model PagedList.IPagedList<Wirly.web.Models.File>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
 }
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <a href="#addFileModal" class="btn btn-info" data-toggle="modal">Add File</a>
-            <ul id="projectFiles">
-                @foreach(var file in Model.Files){
-                   <li>
-                       <a href="#">@file.Name</a>
-                   </li>   
-                  }
-            </ul>
-        </div>
-        <div class="col-lg-8 col-md-8">
-            <h2>@Model.Name</h2>
 
-            @Html.Raw(Model.Body)
+<div class="container">
+    <script src="/Scripts/site.js"></script>
+    <script>
+        $(function(){
+            $('.delete-doc').click(function () {
+                var docId = $(this).attr('data-id');
+                if (confirm("Would you like to delete this document?"))
+                {
+                    wirly.DeleteDoc(docId, function () {
+                        $('#doc-viewer').hide();
+                        $('#project-info').show();
+                    });
+                }
+            });
+
+            $('.view-doc').click(function (evt) {
+                evt.preventDefault();
+                var docPath = $(this).attr('href');
+                $('iframe').attr('src', docPath);
+                $('#doc-viewer').show();
+                $('#project-info').hide();
+            });
+        });
+        
+    </script>
+    <br />
+    <div class="row">
+        <div class="col-md-3">            
+            <a href="#addFileModal" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addFileModal">Add File</a>
+            <br />
+            <div class="input-group">
+                <input type="text" name="fileName" class="form-control" />
+                <span id="search" class="input-group-addon glyphicon glyphicon-search delete-doc"></span>
+            </div>
+            <br />
+            <ul id="projectFiles" class="list-group">
+                @foreach (var file in Model)
+                {
+                    <li class="list-group-item" data-item-id="@file.Id">
+                        <span class="badge delete-doc" data-id="@file.Id" ng-click="">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </span>
+                        <a href="@file.Path" title="@file.Description" class="view-doc">@file.Name</a>
+                    </li>
+                }
+            </ul>
+
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
         </div>
+        <div class="col-md-9">
+            <iframe src="" width="500" height="700" style="display:none;"id="doc-viewer"></iframe>
+            <div id="project-info">
+                <h2>@ViewBag.Name</h2>
+
+                @Html.Raw(ViewBag.Body)
+            </div>
+   
+</div>
     </div>
     <div class="modal fade" id="addFileModal">
         <div class="modal-dialog">
@@ -48,12 +95,4 @@
             </div>
         </div>
     </div>
-
 </div>
-
-
-
-
-
-
-
