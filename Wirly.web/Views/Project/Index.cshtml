@@ -25,6 +25,10 @@
             $('.view-doc').click(function (evt) {
                 evt.preventDefault();
                 var docPath = $(this).attr('href');
+                var id = $(this).attr('data-id');
+                $('ul#projectFiles .active').removeClass('active');
+                $('ul#projectFiles[data-id="' + id + '"]').addClass('active');
+
                 $('iframe').attr('src', docPath);
                 $('#doc-viewer').show();
                 $('#project-info').hide();
@@ -49,7 +53,7 @@
                         <span class="badge delete-doc" data-id="@file.Id" ng-click="">
                             <span class="glyphicon glyphicon-remove"></span>
                         </span>
-                        <a href="@file.Path" title="@file.Description" class="view-doc">@file.Name</a>
+                        <a href="@file.Path" title="@file.Description" class="view-doc" data-id="@file.Id">@file.Name</a>
                     </li>
                 }
             </ul>
@@ -59,7 +63,7 @@
             @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
         </div>
         <div class="col-md-9">
-            <iframe src="" width="500" height="700" style="display:none;"id="doc-viewer"></iframe>
+            <iframe src="" width="600" height="730" style="display:none;"id="doc-viewer"></iframe>
             <div id="project-info">
                 <h2>@ViewBag.Name</h2>
 
@@ -85,6 +89,12 @@
                             <label>Description</label>
                             <textarea name="description" class="form-control"></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="doc-type">Doc Type:</label>
+                            @Html.ListBoxFor<> 
+
+                        </div>
+
                         <div class="form-group">
                             <input type="file" name="file" id="file" class="form-control" />
                         </div>

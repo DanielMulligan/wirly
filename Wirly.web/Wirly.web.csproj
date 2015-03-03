@@ -1247,13 +1247,19 @@
     <Compile Include="Migrations\201502270055162_Add Projects to Files.Designer.cs">
       <DependentUpon>201502270055162_Add Projects to Files.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503031404379_Add DocumentType and Tag Models.cs" />
+    <Compile Include="Migrations\201503031404379_Add DocumentType and Tag Models.Designer.cs">
+      <DependentUpon>201503031404379_Add DocumentType and Tag Models.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Infrastructure\WirlyDbContext.cs" />
+    <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectViewModels.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1309,6 +1315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502270055162_Add Projects to Files.resx">
       <DependentUpon>201502270055162_Add Projects to Files.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503031404379_Add DocumentType and Tag Models.resx">
+      <DependentUpon>201503031404379_Add DocumentType and Tag Models.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

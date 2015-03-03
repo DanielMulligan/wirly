@@ -29,7 +29,8 @@ namespace Wirly.web.Controllers
                 ViewBag.Body = project.Body;
                 ViewBag.Name = project.Name;
 
-                int pageSize = 10;
+
+                int pageSize = 3;
                 int pageNumber = (page ?? 1);
                 var pagedList = project.Files.ToPagedList(pageNumber, pageSize);
 

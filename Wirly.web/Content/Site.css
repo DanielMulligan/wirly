@@ -35,3 +35,15 @@ textarea {
 #search:hover {
     cursor: pointer;
 }
+
+.delete-doc:hover{
+    cursor:pointer;
+}
+
+#projectFiles .delete-doc{
+    font-size:50%;
+}
+
+#projectFiles .active{
+    background-color:lightgray;
+}
