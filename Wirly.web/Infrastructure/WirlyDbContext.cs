@@ -26,7 +26,7 @@ namespace Wirly.web.Infrastructure
         }
 
         public DbSet<Project> Projects { get; set; }
-        public DbSet<File> Files { get; set; }
+        public DbSet<Document> Documents { get; set; }
         public DbSet<DocumentType> DocumentTypes {get; set;}
         public DbSet<Tag> Tags { get; set; }
     }   

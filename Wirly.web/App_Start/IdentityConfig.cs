@@ -14,6 +14,7 @@ namespace Wirly
     {
         public void Configuration(IAppBuilder app)
         {
+            
             app.CreatePerOwinContext<WirlyDbContext>(WirlyDbContext.Create);
             app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
             app.CreatePerOwinContext<AppRoleManager>(AppRoleManager.Create);

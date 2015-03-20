@@ -22,8 +22,5 @@ namespace Wirly.web.Infrastructure
         {
             return new AppRoleManager(new RoleStore<AppRole>(context.Get<WirlyDbContext>()));
         }
-
-
-
     }
 }

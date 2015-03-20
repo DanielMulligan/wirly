@@ -19,40 +19,66 @@ namespace Wirly.web.Controllers
         {
             var loggedOnUserId = User.Identity.GetUserId();
             var db = HttpContext.GetOwinContext().Get<WirlyDbContext>();
-            var project = db.Projects.SingleOrDefault(p => (p.Id == id && p.Users.Select(u => u.Id).Contains(loggedOnUserId)));
-            if (project == null)
+
+            //var project = db.Projects.SingleOrDefault(p => (p.Id == id && p.Users.Select(u => u.Id).Contains(loggedOnUserId)));
+            var project = db.Projects.Find(id);
+
+            if (!project.Users.Any(u => u.Id == loggedOnUserId) && !User.IsInRole("admin"))
             {
                 return new RedirectResult("/");
             }
             else
             {
+                var docTypes = db.DocumentTypes.ToList();
                 ViewBag.Body = project.Body;
                 ViewBag.Name = project.Name;
-
+                ViewBag.DocTypes = docTypes;
 
                 int pageSize = 3;
                 int pageNumber = (page ?? 1);
-                var pagedList = project.Files.ToPagedList(pageNumber, pageSize);
+                var pagedList = project.Documents.ToPagedList(pageNumber, pageSize);
 
                 return View(pagedList);
             }
         }
 
         [HttpPost]
-        [Route("project/{id}")]
-        public ActionResult Index(int id, HttpPostedFileBase file, string fileName, string description)
+        [Route("project/{id}/AddHtml")]
+        [ValidateInput(false)]
+        public ActionResult AddHtml(int id, string html, string docName, string description)
+        {
+            var f = new Wirly.web.Models.Document
+            {
+                Name = docName,
+                Description = description, 
+                Html = html,
+                DocumentType = "html"
+            };
+
+            var db = HttpContext.GetOwinContext().Get<WirlyDbContext>();
+            var project = db.Projects.Find(id);
+            project.Documents.Add(f);
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [Route("project/{id}/AddPdf")]
+        public ActionResult AddPdf(int id, HttpPostedFileBase file, string docName, string description)
         {
             if (file.ContentLength > 0)
             {
-                var f = new Wirly.web.Models.File
+                var f = new Wirly.web.Models.Document
                 {
-                    Name = fileName,
-                    Description = description
+                    Name = docName,
+                    Description = description,
+                    DocumentType = "pdf"
                 };
 
                 var db = HttpContext.GetOwinContext().Get<WirlyDbContext>();
                 var project = db.Projects.Find(id);
-                project.Files.Add(f);
+                project.Documents.Add(f);
 
                 db.SaveChanges();
                 var ext = System.IO.Path.GetExtension(file.FileName);
@@ -72,13 +98,29 @@ namespace Wirly.web.Controllers
         {
             var db = HttpContext.GetOwinContext().Get<WirlyDbContext>();
 
-            var file = db.Files.Find(id);
+            var file = db.Documents.Find(id);
             if(file != null)
             {
                 var docPath = Server.MapPath(file.Path);
                 System.IO.File.Delete(docPath);
-                db.Files.Remove(file);
+                db.Documents.Remove(file);
                 db.SaveChanges();
+            }
+        }
+
+        [HttpGet]
+        [Route("project/GetItemHtml/{id}")]
+        public string GetItemHtml(int id)
+        {
+            var db = Request.GetOwinContext().Get<WirlyDbContext>();
+            var doc = db.Documents.FirstOrDefault(d => d.Id == id);
+            if (doc == null)
+            {
+                return "";
+            }
+            else
+            {
+                return doc.Html;
             }
         }
     }

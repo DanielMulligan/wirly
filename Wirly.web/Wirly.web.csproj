@@ -14,7 +14,7 @@
     <RootNamespace>Wirly.web</RootNamespace>
     <AssemblyName>Wirly.web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -48,7 +48,7 @@
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -1190,6 +1190,7 @@
     <Content Include="Scripts\ProjectController.js" />
     <Content Include="Scripts\ProjectMembershipController.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\uri.js" />
     <Content Include="Scripts\wirlyApp.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1215,48 +1216,24 @@
     <Compile Include="Infrastructure\AppUserManager.cs" />
     <Compile Include="Infrastructure\IdentityHelper.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
-    <Compile Include="Migrations\201501270307118_something changed.cs" />
-    <Compile Include="Migrations\201501270307118_something changed.Designer.cs">
-      <DependentUpon>201501270307118_something changed.cs</DependentUpon>
+    <Compile Include="Migrations\201503190257425_Initial.cs" />
+    <Compile Include="Migrations\201503190257425_Initial.Designer.cs">
+      <DependentUpon>201503190257425_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201501280227497_Add Start Page to AppUser.cs" />
-    <Compile Include="Migrations\201501280227497_Add Start Page to AppUser.Designer.cs">
-      <DependentUpon>201501280227497_Add Start Page to AppUser.cs</DependentUpon>
+    <Compile Include="Migrations\201503192320203_Changed File to Document add HTML prop.cs" />
+    <Compile Include="Migrations\201503192320203_Changed File to Document add HTML prop.Designer.cs">
+      <DependentUpon>201503192320203_Changed File to Document add HTML prop.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201501290246336_Added projects Model.cs" />
-    <Compile Include="Migrations\201501290246336_Added projects Model.Designer.cs">
-      <DependentUpon>201501290246336_Added projects Model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201501300303175_Add Body to Project.cs" />
-    <Compile Include="Migrations\201501300303175_Add Body to Project.Designer.cs">
-      <DependentUpon>201501300303175_Add Body to Project.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502180040479_catch-up.cs" />
-    <Compile Include="Migrations\201502180040479_catch-up.Designer.cs">
-      <DependentUpon>201502180040479_catch-up.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502180152555_Add Projects to AppUser.cs" />
-    <Compile Include="Migrations\201502180152555_Add Projects to AppUser.Designer.cs">
-      <DependentUpon>201502180152555_Add Projects to AppUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502270039248_Add Files Model.cs" />
-    <Compile Include="Migrations\201502270039248_Add Files Model.Designer.cs">
-      <DependentUpon>201502270039248_Add Files Model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502270055162_Add Projects to Files.cs" />
-    <Compile Include="Migrations\201502270055162_Add Projects to Files.Designer.cs">
-      <DependentUpon>201502270055162_Add Projects to Files.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503031404379_Add DocumentType and Tag Models.cs" />
-    <Compile Include="Migrations\201503031404379_Add DocumentType and Tag Models.Designer.cs">
-      <DependentUpon>201503031404379_Add DocumentType and Tag Models.cs</DependentUpon>
+    <Compile Include="Migrations\201503200314092_Add DocumentType to Document.cs" />
+    <Compile Include="Migrations\201503200314092_Add DocumentType to Document.Designer.cs">
+      <DependentUpon>201503200314092_Add DocumentType to Document.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Infrastructure\WirlyDbContext.cs" />
     <Compile Include="Models\DocumentType.cs" />
-    <Compile Include="Models\File.cs" />
+    <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectViewModels.cs" />
     <Compile Include="Models\Tag.cs" />
@@ -1279,6 +1256,7 @@
     <Content Include="Views\ProjectAdmin\Edit.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Shared\_ProjectLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1292,32 +1270,14 @@
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201501270307118_something changed.resx">
-      <DependentUpon>201501270307118_something changed.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503190257425_Initial.resx">
+      <DependentUpon>201503190257425_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201501280227497_Add Start Page to AppUser.resx">
-      <DependentUpon>201501280227497_Add Start Page to AppUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503192320203_Changed File to Document add HTML prop.resx">
+      <DependentUpon>201503192320203_Changed File to Document add HTML prop.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201501290246336_Added projects Model.resx">
-      <DependentUpon>201501290246336_Added projects Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201501300303175_Add Body to Project.resx">
-      <DependentUpon>201501300303175_Add Body to Project.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502180040479_catch-up.resx">
-      <DependentUpon>201502180040479_catch-up.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502180152555_Add Projects to AppUser.resx">
-      <DependentUpon>201502180152555_Add Projects to AppUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502270039248_Add Files Model.resx">
-      <DependentUpon>201502270039248_Add Files Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502270055162_Add Projects to Files.resx">
-      <DependentUpon>201502270055162_Add Projects to Files.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503031404379_Add DocumentType and Tag Models.resx">
-      <DependentUpon>201503031404379_Add DocumentType and Tag Models.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503200314092_Add DocumentType to Document.resx">
+      <DependentUpon>201503200314092_Add DocumentType to Document.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -1335,7 +1295,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49193</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49193/</IISUrl>
+          <IISUrl>http://wirly.dev</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

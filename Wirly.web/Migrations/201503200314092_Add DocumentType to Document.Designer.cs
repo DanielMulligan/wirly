@@ -7,13 +7,13 @@ namespace Wirly.web.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.2-31219")]
-    public sealed partial class AddProjectstoFiles : IMigrationMetadata
+    public sealed partial class AddDocumentTypetoDocument : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddProjectstoFiles));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddDocumentTypetoDocument));
         
         string IMigrationMetadata.Id
         {
-            get { return "201502270055162_Add Projects to Files"; }
+            get { return "201503200314092_Add DocumentType to Document"; }
         }
         
         string IMigrationMetadata.Source

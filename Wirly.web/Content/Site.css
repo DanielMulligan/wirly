@@ -47,3 +47,7 @@ textarea {
 #projectFiles .active{
     background-color:lightgray;
 }
+
+#projectFiles .list-group-item {
+    padding: 7px 12px;
+}

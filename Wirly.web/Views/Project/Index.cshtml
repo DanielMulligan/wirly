@@ -1,13 +1,16 @@
-﻿@model PagedList.IPagedList<Wirly.web.Models.File>
+﻿@model PagedList.IPagedList<Wirly.web.Models.Document>
 @using PagedList.Mvc;
 
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ProjectLayout.cshtml";
 }
 
-<div class="container">
+<div class="container-fluid">
+    <script src="~/Scripts/uri.js"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
     <script src="/Scripts/site.js"></script>
     <script>
         $(function(){
@@ -24,14 +27,52 @@
 
             $('.view-doc').click(function (evt) {
                 evt.preventDefault();
-                var docPath = $(this).attr('href');
-                var id = $(this).attr('data-id');
-                $('ul#projectFiles .active').removeClass('active');
-                $('ul#projectFiles[data-id="' + id + '"]').addClass('active');
+                if ($(this).attr('data-doc-type') == 'pdf') {
+                    var docPath = $(this).attr('href');
+                    var id = $(this).attr('data-id');
+                    $('ul#projectFiles .active').removeClass('active');
+                    $('ul#projectFiles[data-id="' + id + '"]').addClass('active');
 
-                $('iframe').attr('src', docPath);
-                $('#doc-viewer').show();
-                $('#project-info').hide();
+                    $('#doc-viewer').attr('src', docPath);
+                    $('#doc-viewer').show();
+                    $('#project-info').hide();
+                }
+                else {
+                    var id = $(this).attr("data-id");
+                    var data = JSON.stringify({
+                        id: id
+                    });
+
+                    var targetUrl = '/project/GetItemHtml/' + id;
+                        
+                    $.ajax({
+                        type: "Get",
+                        url: targetUrl,
+                        contentType: "application/json charset=utf-8",
+                        success: function (msg) {
+                            $('#project-info').html(msg);
+                            $('#doc-viewer').hide();
+                            $('#project-info').show();
+                        }
+                    });
+                }
+            });
+
+            $('#selDocType').change(function () {
+                var newVal = $(this, 'option').val();
+                var uri = new URI();
+
+                if (newVal == 'Html')
+                {
+                    $('.pdf-doc-type').hide();
+                    $('.html-doc-type').show();             
+                    $('#btnSubmit').attr("formaction", uri.path() + "/AddHtml");
+                }
+                else {
+                    $('.html-doc-type').hide();
+                    $('.pdf-doc-type').show();
+                    $('#btnSubmit').attr("formaction", uri.path() + "/AddPdf");
+                }
             });
         });
         
@@ -39,7 +80,7 @@
     <br />
     <div class="row">
         <div class="col-md-3">            
-            <a href="#addFileModal" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addFileModal">Add File</a>
+            <a href="#addFileModal" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addFileModal">Add Item</a>
             <br />
             <div class="input-group">
                 <input type="text" name="fileName" class="form-control" />
@@ -53,7 +94,7 @@
                         <span class="badge delete-doc" data-id="@file.Id" ng-click="">
                             <span class="glyphicon glyphicon-remove"></span>
                         </span>
-                        <a href="@file.Path" title="@file.Description" class="view-doc" data-id="@file.Id">@file.Name</a>
+                        <a href="@file.Path" title="@file.Description" class="view-doc" data-id="@file.Id" data-doc-type="@file.DocumentType">@file.Name</a>
                     </li>
                 }
             </ul>
@@ -77,13 +118,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <a href="#" class="close" data-dismiss="modal">&times;</a>
-                    <h4>Add File</h4>
+                    <h4>Add Item</h4>
                 </div>
                 <div class="modal-body">
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="file">Name:</label>
-                            <input type="text" name="fileName" class="form-control" />
+                            <input type="text" name="docName" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Description</label>
@@ -91,14 +132,20 @@
                         </div>
                         <div class="form-group">
                             <label for="doc-type">Doc Type:</label>
-                            @Html.ListBoxFor<> 
-
+                            <select id="selDocType">
+                                <option>Pdf</option>
+                                <option>Html</option>
+                            </select>               
                         </div>
-
-                        <div class="form-group">
+                        
+                        <div class="form-group pdf-doc-type">
                             <input type="file" name="file" id="file" class="form-control" />
                         </div>
-                        <input type="submit" class="btn btn-primary" />
+
+                        <div class="form-group html-doc-type" style="display:none;">
+                            @Html.TextArea("htmlContent", new {@class="ckeditor", Name="html"})
+                        </div>
+                        <input type="submit" class="btn btn-primary" id="btnSubmit" formaction="/project/1/AddPdf"/>
                     </form>
                 </div>
                 <div class="modal-footer"></div>

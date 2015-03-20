@@ -20,7 +20,13 @@ namespace Wirly.web.Controllers
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
             var loggedOnUser = await userManager.FindByIdAsync(User.Identity.GetUserId());
-            
+
+            if (User.IsInRole("admin"))
+            {
+                var db = HttpContext.GetOwinContext().Get<WirlyDbContext>();
+                loggedOnUser.Projects = db.Projects.ToList();
+            }
+           
             return View(loggedOnUser.Projects);
         }
     }
